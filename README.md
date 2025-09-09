@@ -1,2 +1,8 @@
 # chess-engine-v1
 Simple chess engine
+
+1. Usage:
+   This program is meant to be used as library. To do it, add this project to your compile and include paths, and include API.h, you might also want to include DataTypes.h. All chess-engine functions are in chessAI namespace. Before usage of library, you should call the chessAI::Init() function. API is intented for user playing as white, and computer as black. chessAI::Move is class from DataTypes.h, which has conversion from {int StartPointX, int StartPointY, int EndPointX, int EndPointY} - X, Y in {0, 1, 2...7}. You can insert your move via chessAI::WhiteMove(chessAI::Move), then call chessAI::BlackMove(). To get current chess position call chessAI::GetBoardAsArray(), which return type is std::array<std::array<int, 8>, 8>. If you would like to change depth of search, you can do it in Config.h.
+
+2. About project:
+   Engine works via dfs iterating over chess positions to a certain depth. It alternaly maximizes score for white and minimazies score for black, because position score = score(white) - score(black). Search is sped up by alpha-beta pruning algorithm, which cuts off branches that won't change the outcome. Another optimalization is holding chess positions in bitboards, meaning that pieces are held in 64bit integers, where each 1 represents piece in certain point on chessboard. Calculating score is done in Evaluate.h function, which is static. It counts material, checks if king's castled, looks at pieces activity and theire location on board, and also checks doubled pawns and bishops. There is also unfinished part with ZobristHashing and PositionHeap, which is meant to optimize MinMax a bit in the future, and also carry draws by reapiting position
